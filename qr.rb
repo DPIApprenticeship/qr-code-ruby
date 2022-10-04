@@ -13,13 +13,16 @@ while true
     when 1
       p "Please enter the web address"
       web_address = gets.chomp
-      p "What would you like to call your qr code?"
-      qr_code_name = gets.chomp
       qr_code = RQRCode::QRCode.new("#{web_address}")
     when 2
-      p "You chose 2"
       p "Enter the recipient's number:"
       phone_num = gets.chomp
+
+      p "What message would you like to send?"
+      message = gets.chomp
+      qr_code = RQRCode::QRCode.new("SMSTO: #{phone_num}: #{message}")
+
+
     when 3
       break
     else
@@ -27,6 +30,8 @@ while true
   end
 
   if qr_code
+    p "What would you like to call your qr code?"
+    qr_code_name = gets.chomp
     png = qr_code.as_png({ :size => 500 })
     IO.binwrite("#{qr_code_name}.png", png.to_s)
   end
