@@ -4,7 +4,8 @@ while true
   p "What would you like to generate a qr code for (choose a number)?"
   p "1. Web address"
   p "2. SMS Message"
-  p "3. Exit the program"
+  p "3. WiFi Network"
+  p "4. Exit the program"
 
   user_choice = gets.chomp
   choice_num = user_choice.to_i
@@ -21,9 +22,13 @@ while true
       p "What message would you like to send?"
       message = gets.chomp
       qr_code = RQRCode::QRCode.new("SMSTO: #{phone_num}: #{message}")
-
-
     when 3
+      p "What is the network's name?"
+      network_name = gets.chomp
+      p "What is the network's password?"
+      network_password = gets.chomp
+      qr_code = RQRCode::QRCode.new("WIFI:T:WPA;S:#{network_name};P:#{network_password};;")
+    when 4
       break
     else
       p "You did not enter a valid choice"
